@@ -21,15 +21,18 @@ class DashboardScreen extends StatelessWidget {
               Center(
                 child: 
                 TextField(
-                  style: TextStyle(fontSize:26 ),
+                  style: TextStyle(fontSize:18 ),
                 ),
               ),
               Center(
                 child: 
                 TextField(
-                  style: TextStyle(fontSize:26 ),
+                  style: TextStyle(fontSize:18 ),
                   
                 ),
+              ),
+              Center(
+                
               )
             ],
           ),
