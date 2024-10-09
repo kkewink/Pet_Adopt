@@ -1,56 +1,54 @@
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+class SingUp extends StatelessWidget {
+  const SingUp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return  SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
-          
           child: Column(
             children: [
               const Center(
                 child: 
                 Column(
                   children: [
-                    Icon(Icons.pets, color: Colors.white,size: 50,),
-                    Text("Login",
-                    style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.white
+                    Icon(Icons.pets,color: Colors.white,size: 50,),
+                  Text("Sing Up",
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white
                     ),),
                   ],
                 ),
-              ), 
-
-
-              Container(
-                margin: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 63, 35, 87)
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Email",
-                                  style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
-                                ),
-                            )],
-                            ),
+              ),
+             
+             Container(
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
+                color:  Color.fromARGB(255, 63, 35, 87)
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 30),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 5),
+                          child: const Row(children: [
+                            Text(
+                              "Email",style: TextStyle(
+                                fontSize: 20,fontWeight: FontWeight.bold, color:Colors.white,
+                              ),
+                              )],
                           ),
-                          Container(
+                        ),
+
+                        Container(
                             decoration: BoxDecoration(
                               border: Border.all(width: 2, color: Colors.white),
                               borderRadius: BorderRadius.circular(10),
@@ -64,7 +62,7 @@ class DashboardScreen extends StatelessWidget {
                                         size: 25,
                                         color: Colors.white,
                                       )),
-                                  hintText: "ghd@email.com",
+                                  hintText: "",
                                   hintStyle: const TextStyle(
                                       color: Color.fromRGBO(255, 255, 255, 1)),
                                   border: InputBorder.none
@@ -72,12 +70,13 @@ class DashboardScreen extends StatelessWidget {
                                   ),
                             ),
                           ),
-                     Container(
-                      margin: EdgeInsets.only(top: 30),
+
+                          Container(
+                      margin: const EdgeInsets.only(top: 30),
                       child: Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(bottom: 5),
+                            margin: const EdgeInsets.only(bottom: 5),
                             child: const Row(
                               children: [
                                 Text(
@@ -103,7 +102,7 @@ class DashboardScreen extends StatelessWidget {
                                         size: 25,
                                         color: Colors.white,
                                       )),
-                                  hintText: "******",
+                                  hintText: "",
                                   hintStyle: const TextStyle(
                                       
                                       color: Color.fromRGBO(255, 255, 255, 1)),
@@ -112,16 +111,57 @@ class DashboardScreen extends StatelessWidget {
                                   ),
                             ),
                           ),
-                  
-                    Center(
+
+
+                          Container(
+                      margin: const EdgeInsets.only(top: 30),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: const Row(
+                              children: [
+                                Text(
+                                  "Confirm Passowrd",
+                                  style: TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
+                                ),
+                            )],
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 2, color: Colors.white),
+                              borderRadius: BorderRadius.circular(10),
+                              
+                            ),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  icon: Container(
+                                      margin: const EdgeInsets.only(left: 15),
+                                      child: const Icon(
+                                        Icons.password,
+                                        size: 25,
+                                        color: Colors.white,
+                                      )),
+                                  hintText: "",
+                                  hintStyle: const TextStyle(
+                                      color: Color.fromRGBO(255, 255, 255, 1)),
+                                  border: InputBorder.none
+                                  // border
+                                  ),
+                            ),
+                          ),
+
+                          Center(
                       child: Container(
                         width: 200,
-                        decoration: BoxDecoration(
-                          // border: Border.all(width: 2),
-                          // borderRadius: BorderRadius.circular(233)
+                        
+                        decoration: const BoxDecoration(
                         ),
                         child: ElevatedButton(
                           onPressed: (){},
+                          // ignore: sort_child_properties_last
                           child: const Text("Login", style: TextStyle(color: Colors.white),),
                           style:  ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(
@@ -133,32 +173,16 @@ class DashboardScreen extends StatelessWidget {
                           ),
                       ),
                     ),
-                    
-                    const Center(
-                      child: Text("Or",style: TextStyle(color: Colors.purple),
-                      ),
-                    ),
-                    
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.insert_emoticon_sharp,color: Colors.white,),
-                        Icon(Icons.insert_emoticon_sharp,color: Colors.white,)
                       ],
                     ),
-                    const Center(
-                      child: Text("Or",style: TextStyle(color: Colors.purple),
-                      ),
-                    ),
-                    
-                                ],
-                              ),
-                            ),
-                  ],
-                ),
+                  )
+                ],
               ),
+             ) 
+                ],
+          ),
+        ),
   ]),
-
     )]))));
   }
 }
