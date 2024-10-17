@@ -5,14 +5,14 @@ class HomeP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-      child: Scaffold(
-        Image: DecorationImage(
-            image: AssetImage('assets/images/background.png'), // Caminho da imagem de background
+    return SafeArea(
+      child: const Scaffold(
+        Imagem: const DecorationImage(
+            image:const AssetImage('assets/images/background.png'), // Caminho da imagem de background
             fit: BoxFit.cover,
           ),
-        body: SingleChildScrollView(
-          child: Column(
+        body: const SingleChildScrollView(
+          child: const  Column(
 
           ),
         ),
