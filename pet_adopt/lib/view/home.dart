@@ -5,7 +5,7 @@ class HomeP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: const Scaffold(
         Imagem: const DecorationImage(
             image:const AssetImage('assets/images/background.png'), // Caminho da imagem de background
