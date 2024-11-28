@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:pet_adopt/constants/images_assets.dart';
-import 'package:pet_adopt/view/home_screen.dart';
 import 'package:pet_adopt/view/singUp_screen.dart';
+import 'package:pet_adopt/main.dart';
 
 class LoginIn extends StatefulWidget {
   const LoginIn({super.key});
@@ -203,9 +203,9 @@ class _LoginInState extends State<LoginIn> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(AppImages.googleIcon, width: 40),
+                        // Image.asset(AppImages.googleIcon, width: 40),
                         const SizedBox(width: 20),
-                        Image.asset(AppImages.facebookIcon, width: 40),
+                        // Image.asset(AppImages.facebookIcon, width: 40),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -213,9 +213,17 @@ class _LoginInState extends State<LoginIn> {
                       "Don't have an account?",
                       style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                     ),
-                    const Text(
-                      "REGISTER",
-                      style: TextStyle(color: Color.fromARGB(255, 249, 87, 255)),
+                    GestureDetector(
+                      onTap: () {
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SingUp(),
+                      ));
+                      },
+                      child: const Text(
+                        "REGISTER",
+                        style: TextStyle(color: Color.fromARGB(255, 249, 87, 255)),
+                      ),
                     ),
                   ],
                 ),

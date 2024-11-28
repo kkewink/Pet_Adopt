@@ -41,303 +41,156 @@ class SingUp extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              const Center(
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.pets,
-                      color: Colors.white,
-                      size: 50,
-                    ),
-                    Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        fontSize: 32,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+              const Icon(
+                Icons.pets,
+                color: Colors.white,
+                size: 50,
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Sign Up",
+                style: TextStyle(
+                  fontSize: 32,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                padding: const EdgeInsets.all(12),
-                decoration:
-                    const BoxDecoration(color: Color.fromARGB(255, 63, 35, 87)),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Nome",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.white),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              controller: nameController,
-                              decoration: InputDecoration(
-                                  icon: Container(
-                                      margin: const EdgeInsets.only(left: 15),
-                                      child: const Icon(
-                                        Icons.email_outlined,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                  hintText: "Digite seu nome",
-                                  hintStyle: const TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Telefone",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.white),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              controller: phoneController,
-                              decoration: InputDecoration(
-                                  icon: Container(
-                                      margin: const EdgeInsets.only(left: 15),
-                                      child: const Icon(
-                                        Icons.phone_outlined,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                  hintText: "Digite seu telefone",
-                                  hintStyle: const TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Email",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.white),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              controller: emailController,
-                              decoration: InputDecoration(
-                                  icon: Container(
-                                      margin: const EdgeInsets.only(left: 15),
-                                      child: const Icon(
-                                        Icons.email_outlined,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                  hintText: "abc@email.com",
-                                  hintStyle: const TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Password",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.white),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                  icon: Container(
-                                      margin: const EdgeInsets.only(left: 15),
-                                      child: const Icon(
-                                        Icons.lock_outline,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                  hintText: "******",
-                                  hintStyle: const TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Confirm Password",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.white),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              controller: confirmPassController,
-                              decoration: InputDecoration(
-                                  icon: Container(
-                                      margin: const EdgeInsets.only(left: 15),
-                                      child: const Icon(
-                                        Icons.lock_outline,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                  hintText: "******",
-                                  hintStyle: const TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                  border: InputBorder.none),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    Container(
-                      margin: const EdgeInsets.only(top:50),
-                      child: ElevatedButton(
-                        onPressed:(){
-                          cadastro();
-                        },
-                        style: const ButtonStyle(
-                          fixedSize: WidgetStatePropertyAll(Size.fromWidth(207)),
-                          padding: WidgetStatePropertyAll(EdgeInsets.all(15)),
-                          backgroundColor: WidgetStatePropertyAll(Colors.white),
-                        ),
-                         child: const Text(
-                          "login",
-                          style: TextStyle(color: Colors.black,fontSize: 20),
-                         )),
-                    ), 
-                    Container(
-                      margin: const EdgeInsets.only(top:20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Ja tem Conta?",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          GestureDetector(
-                            child: const Text("Login",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 62, 152, 100),
-                              fontSize: 14
-                            )),
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginIn()));
-                            },
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+              const SizedBox(height: 30),
+              _buildTextField(
+                controller: nameController,
+                label: "Nome",
+                hintText: "Digite seu nome",
+                icon: Icons.person_outline,
+              ),
+              const SizedBox(height: 20),
+              _buildTextField(
+                controller: phoneController,
+                label: "Telefone",
+                hintText: "Digite seu telefone",
+                icon: Icons.phone_outlined,
+              ),
+              const SizedBox(height: 20),
+              _buildTextField(
+                controller: emailController,
+                label: "Email",
+                hintText: "abc@email.com",
+                icon: Icons.email_outlined,
+              ),
+              const SizedBox(height: 20),
+              _buildTextField(
+                controller: passwordController,
+                label: "Password",
+                hintText: "******",
+                icon: Icons.lock_outline,
+                obscureText: true,
+              ),
+              const SizedBox(height: 20),
+              _buildTextField(
+                controller: confirmPassController,
+                label: "Confirm Password",
+                hintText: "******",
+                icon: Icons.lock_outline,
+                obscureText: true,
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: cadastro,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 50, vertical: 15),
                 ),
+                child: const Text(
+                  "Sign Up",
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Já tem conta?",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  GestureDetector(
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 249, 87, 255),
+                        fontSize: 14,
+                      ),
+                    ),
+                    onTap: () {
+                      // Substitua pelo componente de login correto
+                      print("teste");
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const LoginIn(),
+                      ));
+                    },
+                  ),
+                ],
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hintText,
+    required IconData icon,
+    bool obscureText = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Container(
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 71, 0, 99),
+            border: Border.all(width: 2, color: Colors.white),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: TextField(
+            controller: controller,
+            obscureText: obscureText,           
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              icon: Container(
+                margin: const EdgeInsets.only(left: 15),
+                child: Icon(icon, size: 25, color: Colors.white),
+              ),
+              hintText: hintText,
+              hintStyle: const TextStyle(color: Colors.white),
+              border: InputBorder.none,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
