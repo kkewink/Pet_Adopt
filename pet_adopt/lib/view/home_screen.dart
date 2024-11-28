@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:pet_adopt/constants/images_assets.dart';
 import 'package:pet_adopt/widgets/bottom_navigator_widget.dart';
+import 'package:pet_adopt/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,92 +14,151 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> pets = [];
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
-  void getPets() async {
-    var client = http.Client();
-    var url = ""; // Adicione a URL correta aqui
-
-    try {
-      var response = await client.get(Uri.parse(url));
-
-      var responseData = jsonDecode(response.body);
-      print("element");
-
-      for (var element in responseData['pets']) {
-        setState(() {
-          pets.add(element);
-        });
-      }
-    } finally {
-      client.close();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getPets();
-  }
-
-  @override
+   @override
   Widget build(BuildContext context) {
-    print(pets.length);
-
     return Scaffold(
-      appBar: const AppBarWidget(),
-      body: SingleChildScrollView(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
-            fit: BoxFit.cover,
-          ),
+      key: _scaffoldKey,
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.white),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
         ),
+      ),
+      drawer: Drawer(
         child: Column(
           children: [
-            Image.asset(AppImages.dogsHome),
-            Container(
-              margin: const EdgeInsets.only(top: 20, bottom: 20, left: 20),
-              child: const Row(
+            DrawerHeader(
+              decoration: const BoxDecoration(color: Color.fromARGB(255, 53, 53, 53)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Categories",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            ),
-            
-            const CategoriasContainer(),
-
-            Container(
-              margin: const EdgeInsets.only(top: 20, bottom: 5, left: 20),
-              child: const Row(
-                children: [
-                  Text(
-                    "Popular pets",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  const Text(
+                    'Menu',
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Fecha o menu lateral
+                    },
                   ),
                 ],
               ),
             ),
-            GridView.builder(
-              shrinkWrap: true,
-              primary: false,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: pets.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.9,
+            ListTile(
+              leading: const Icon(Icons.home, color: Colors.black),
+              title: const Text('Account information'),
+              onTap: () {
+                // Ação do menu "Account information"
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.pets, color: Colors.black),
+              title: const Text('My pets'),
+              onTap: () {
+                // Ação do menu "My pets"
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite, color: Colors.black),
+              title: const Text('Favorites'),
+              onTap: () {
+                // Ação do menu "Favorites"
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings, color: Colors.black),
+              title: const Text('Settings'),
+              onTap: () {
+                // Ação do menu "Settings"
+              },
+            ),
+            const Divider(), // Linha de separação
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.red),
               ),
-              itemBuilder: (context, index) {
-                List<dynamic> images = pets[index]['images'];
-                return CardPet(name: pets[index]['name'], images: images);
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Logout'),
+                    content: const Text('Tem certeza que deseja sair?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Redireciona para a página de login
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => const LoginIn()),
+                            (route) => false,
+                          );
+                        },
+                        child: const Text(
+                          'Sair',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ],
         ),
       ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.pets,
+                size: 80,
+                color: Colors.white,
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Choose Location',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[800],
+                  hintText: 'Search for a location...',
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                  prefixIcon: const Icon(Icons.search, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
+

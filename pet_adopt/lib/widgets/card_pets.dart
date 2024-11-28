@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:pet_adopt/constants/images_assets.dart';
-import 'package:pet_adopt/view/pet_details.dart';
+import 'package:pet_adopt/view/pet_details';
 import 'package:flutter/material.dart';
 
 class CardPet extends StatelessWidget {
@@ -35,7 +35,7 @@ class CardPet extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 20),
+                      margin: const EdgeInsets.only(left: 20),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

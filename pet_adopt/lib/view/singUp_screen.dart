@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:pet_adopt/constants/images_assets.dart';
-import 'package:pet_adopt/view/home_screen.dart';
 import 'package:pet_adopt/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -292,7 +290,7 @@ class SingUp extends StatelessWidget {
                     ),
 
                     Container(
-                      margin: EdgeInsets.only(top:50),
+                      margin: const EdgeInsets.only(top:50),
                       child: ElevatedButton(
                         onPressed:(){
                           cadastro();
@@ -303,28 +301,16 @@ class SingUp extends StatelessWidget {
                           backgroundColor: WidgetStatePropertyAll(Colors.white),
                         ),
                          child: const Text(
-                          "Criar Conta",
+                          "login",
                           style: TextStyle(color: Colors.black,fontSize: 20),
                          )),
-                    ),
+                    ), 
                     Container(
-                      margin: EdgeInsets.only(top:20),
-                      width: 200,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                            Image.asset(AppImages.googleIcon),
-                            Image.asset(AppImages.facebookIcon),
-                            Image.asset(AppImages.twitterIcon)
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top:20),
+                      margin: const EdgeInsets.only(top:20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Ja tem Conta?",
                             style: TextStyle(
                               fontSize: 14,
@@ -332,14 +318,14 @@ class SingUp extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            child: Text("Login",
+                            child: const Text("Login",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 62, 152, 100),
                               fontSize: 14
                             )),
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => LogIn()));
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginIn()));
                             },
                           )
                         ],

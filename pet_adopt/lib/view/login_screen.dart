@@ -1,226 +1,229 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:pet_adopt/constants/images_assets.dart';
 import 'package:pet_adopt/view/home_screen.dart';
 import 'package:pet_adopt/view/singUp_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-class LogIn extends StatefulWidget {
-  const LogIn({super.key});
+class LoginIn extends StatefulWidget {
+  const LoginIn({super.key});
 
   @override
-  State<LogIn> createState() => _LoginInState();
-
+  State<LoginIn> createState() => _LoginInState();
 }
 
-  class _LoginInState extends State<LogIn> {
-    String msgErro = "";
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+class _LoginInState extends State<LoginIn> {
+  String msgErro = "";
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-    
-    @override
-  Widget build(BuildContext context) {
-
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
-    void fazerLogin() async {
-
+  void login() {
+    setState(() {
       if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-        return setState(() => {
-          msgErro = "Valide seus dados"
+        msgErro = "Preencha todos os campos!";
+      } else {
+        msgErro = "";
+        print(
+            "Email: ${emailController.text}, Password: ${passwordController.text}");
+      }
+    });
+  }
+
+  void fazerLogin() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      setState(() {
+        msgErro = "Valide seus dados";
+      });
+      return;
+    }
+
+    var client = http.Client();
+    var url = 'https://example.com/login'; // Substitua pela URL correta.
+    var data = {
+      "email": emailController.text,
+      "password": passwordController.text
+    };
+
+    try {
+      var response = await client.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(data),
+      );
+
+      var responseData = jsonDecode(response.body);
+      print(responseData['success']);
+
+      if (responseData['success'] != true) {
+        print(responseData['message']);
+        setState(() {
+          msgErro = responseData['message'];
         });
       }
-
-     var client = http.Client();
-     var url = '';
-     var data = {
-        "email": emailController.text,
-        "password": passwordController.text
-     };
-     try{
-        var response = await client.post(Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(data));
-        var responseData = jsonDecode(response.body);
-        print(responseData['sucess']);
-
-        if (responseData['sucess'] != true) {
-          print(responseData['message']);
-
-          setState((){msgErro = responseData['message'];});
-        }
-     }finally{
+    } finally {
       client.close();
-     }
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
-          
           child: Column(
             children: [
               const Center(
-                child: 
-                Column(
-                  children: [
-                    Icon(Icons.pets, color: Colors.white,size: 50,),
-                    Text("Login",
-                    style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.white
-                    ),),
-                  ],
-                ),
-              ), 
-
-
-              Container(
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 63, 35, 87)
-                ),
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Email",
-                                  style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
-                                ),
-                            )],
-                            ),
-                          ),
-                          Container(                     
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.white),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextField(
-                              controller: emailController,
-                              decoration: InputDecoration(
-                                  icon: Container(
-                                      margin: const EdgeInsets.only(left: 15),
-                                      child: const Icon(
-                                        Icons.email_outlined,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                  hintText: "ghd@email.com",
-                                  hintStyle: const TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                  border: InputBorder.none
-                                  // border
-                                  ),
-                            ),
-                          ),
-                          
-                     Container(
-                      margin: EdgeInsets.only(top: 30),
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Password",
-                                  style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,
-                                ),
-                            )],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 2, color: Colors.white),
-                              borderRadius: BorderRadius.circular(10),
-                              
-                            ),
-                            child: TextField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                  icon: Container(
-                                      margin: const EdgeInsets.only(left: 15),
-                                      child: const Icon(
-                                        Icons.lock_outline,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                  hintText: "******",
-                                  hintStyle: const TextStyle(
-                                      
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                  border: InputBorder.none
-                                  // border
-                                  ),
-                            ),
-                          ),
-                    Text(msgErro),
-                    Center(
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                          // border: Border.all(width: 2),
-                          // borderRadius: BorderRadius.circular(233)
-                        ),
-                        child: ElevatedButton(
-                          onPressed: (){},
-                          child: const Text("Login", style: TextStyle(color: Colors.white),),
-                          style:  ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                       // Sem bordas arredondadas
-                    ),
-                    backgroundColor: Colors.purple
-                                ),
-                          ),
-                      ),
-                    ),
-                    
-                    const Center(
-                      child: Text("Or",style: TextStyle(color: Colors.purple),
-                      ),
-                    ),
-                    
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.insert_emoticon_sharp,color: Colors.white,),
-                        Icon(Icons.insert_emoticon_sharp,color: Colors.white,)
-                      ],
-                    ),
-                    const Center(
-                      child: Text("Don't have an account?",style: TextStyle(color: Colors.purple),
-                      ),
-                    ),
-
-                    const Center(
-                      child: Text("Create",style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                    ),
-                      
-
-                                ],
-                              ),
-                            ),
+                    Icon(Icons.pets, color: Colors.white, size: 50),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
-  ]),
-
-    )]))));
+              Container(
+                margin: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(12),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 38, 13, 59),
+                ),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 28,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 30),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 71, 0, 99),
+                              border: Border.all(width: 2, color: Colors.white),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: TextField(
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                icon: Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Icon(
+                                    Icons.email_outlined,
+                                    size: 25,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                hintText: "ghd@email.com",
+                                hintStyle: TextStyle(color: Colors.white),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Column(
+                      children: [
+                        const Text(
+                          "Password",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 71, 0, 99),
+                            border: Border.all(width: 2, color: Colors.white),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: TextField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              icon: Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Icon(
+                                  Icons.lock_outline,
+                                  size: 25,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              hintText: "******",
+                              hintStyle: TextStyle(color: Colors.white),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: double.infinity, // Largura total do pai (Container)
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: login,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.zero, // Sem bordas arredondadas
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15), // Ajuste da altura
+                        ),
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Or",
+                      style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(AppImages.googleIcon, width: 40),
+                        const SizedBox(width: 20),
+                        Image.asset(AppImages.facebookIcon, width: 40),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Don't have an account?",
+                      style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                    ),
+                    const Text(
+                      "REGISTER",
+                      style: TextStyle(color: Color.fromARGB(255, 249, 87, 255)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
-  
