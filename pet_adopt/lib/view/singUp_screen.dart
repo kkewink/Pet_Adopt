@@ -40,6 +40,7 @@ class SingUp extends StatelessWidget {
       }
     }
 
+ 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       body: SingleChildScrollView(
@@ -129,7 +130,7 @@ class SingUp extends StatelessWidget {
                       "Login",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 249, 87, 255),
+                        color: Color.fromRGBO(233, 82, 238, 1),
                         fontSize: 14,
                       ),
                     ),
