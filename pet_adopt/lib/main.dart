@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pet_adopt/view/home_screen.dart';
-import 'package:pet_adopt/view/load_screen';
 import 'package:pet_adopt/view/singUp_screen.dart';
 import 'package:pet_adopt/view/login_screen.dart';
 import 'package:pet_adopt/view/pet_sing.dart';
