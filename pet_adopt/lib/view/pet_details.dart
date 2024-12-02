@@ -1,10 +1,9 @@
 import 'package:pet_adopt/constants/images_assets.dart';
-import 'package:pet_adopt/widgets/bottom_navigator_widget.dart';
 import 'package:pet_adopt/widgets/characters_pet.dart';
 import 'package:flutter/material.dart';
 
-class PetDetails extends StatelessWidget {
-  const PetDetails({super.key});
+class PetsDetails extends StatelessWidget {
+  const PetsDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +11,12 @@ class PetDetails extends StatelessWidget {
       appBar: AppBar(
         actions: [
           ElevatedButton(
-            style: ButtonStyle(
+            style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(Colors.white),
               elevation: WidgetStatePropertyAll(0)
               ),
             onPressed: () {  },
-            child: Icon(Icons.favorite_border,size: 35,),
+            child: const Icon(Icons.favorite_border,size: 35,),
           )
         ],
       ),
@@ -74,7 +73,7 @@ class PetDetails extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               padding:const EdgeInsets.all(10) ,
               decoration:  BoxDecoration(
                 color: Colors.pink,

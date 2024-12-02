@@ -222,7 +222,7 @@ class _LoginInState extends State<LoginIn> {
                       },
                       child: const Text(
                         "REGISTER",
-                        style: TextStyle(color: Color.fromARGB(255, 249, 87, 255)),
+                        style: TextStyle(color: Color.fromRGBO(233, 82, 238, 1)),
                       ),
                     ),
                   ],

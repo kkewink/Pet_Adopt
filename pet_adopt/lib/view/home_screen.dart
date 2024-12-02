@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:pet_adopt/constants/images_assets.dart';
-import 'package:pet_adopt/widgets/bottom_navigator_widget.dart';
 import 'package:pet_adopt/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -132,7 +131,7 @@ class HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Choose Location',
+                'Choose Pet',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 32,
@@ -145,7 +144,7 @@ class HomeScreenState extends State<HomeScreen> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[800],
-                  hintText: 'Search for a location...',
+                  hintText: 'Search',
                   hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),

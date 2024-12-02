@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:pet_adopt/constants/images_assets.dart';
-import 'package:pet_adopt/view/pet_details';
+import 'package:pet_adopt/view/pet_details.dart';
 import 'package:flutter/material.dart';
 
 class CardPet extends StatelessWidget {
@@ -45,10 +45,10 @@ class CardPet extends StatelessWidget {
                           const Row(
                             children: [
                               Text(
-                                "3 Year",
+                                "1 Year",
                                 style: TextStyle(
                                     fontSize: 14,
-                                    color: Color.fromRGBO(72, 72, 72, 0.612)),
+                                    color: Color.fromRGBO(255, 255, 255, 1)),
                               ),
                               Icon(
                                 Icons.male,
@@ -66,7 +66,7 @@ class CardPet extends StatelessWidget {
       ),
       onTap: () {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const PetDetails()));
+            .push(MaterialPageRoute(builder: (context) => const PetsDetails()));
       },
     );
   }
