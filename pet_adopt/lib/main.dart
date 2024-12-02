@@ -5,7 +5,9 @@ import 'package:pet_adopt/view/login_screen.dart';
 import 'package:pet_adopt/view/pet_sing.dart';
 import 'package:pet_adopt/view/dog_screen.dart';
 import 'package:pet_adopt/view/favorite_screen.dart';
+import 'package:pet_adopt/view/edit_profile.dart';
 import 'package:pet_adopt/view/onboarding_screen.dart';
+import 'package:pet_adopt/view/pet_details.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:const OnboardingScreen(),
+      home:const HomeScreen(),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:localstorage/localstorage.dart';
 import 'package:pet_adopt/constants/images_assets.dart';
+import 'package:pet_adopt/widgets/categorias_container.dart';
+import 'package:pet_adopt/widgets/card_pets.dart';
 import 'package:pet_adopt/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,12 +16,60 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> pets = [];
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String nameUser = "";
 
-   @override
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+    getPets();
+  }
+
+  // Função para obter pets
+  void getPets() async {
+    var client = http.Client();
+    var url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
+
+    try {
+      var response = await client.get(Uri.parse(url));
+      var responseData = jsonDecode(response.body);
+
+      for (var element in responseData['pets']) {
+        setState(() {
+          pets.add(element);
+        });
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  // Função para obter dados do usuário
+  void getUser() async {
+    await initLocalStorage();
+
+    var client = http.Client();
+    var idUser = localStorage.getItem("_idUser");
+    var token = localStorage.getItem("token");
+
+    if (idUser == null || token == null) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginIn()));
+      return; // Evita continuar se não houver idUser ou token
+    }
+
+    var url =
+        "https://pet-adopt-dq32j.ondigitalocean.app/user/${idUser.toString()}";
+    var response = await client.get(Uri.parse(url));
+    var responseData = jsonDecode(response.body);
+    
+    setState(() {
+      nameUser = responseData['user']['name'];
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -26,7 +77,8 @@ class HomeScreenState extends State<HomeScreen> {
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
+            // Se o Drawer for necessário, esse código pode ser habilitado
+            // _scaffoldKey.currentState?.openDrawer();
           },
         ),
       ),
@@ -79,7 +131,7 @@ class HomeScreenState extends State<HomeScreen> {
                 // Ação do menu "Settings"
               },
             ),
-            const Divider(), // Linha de separação
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
               title: const Text(
@@ -99,7 +151,6 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Redireciona para a página de login
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) => const LoginIn()),
                             (route) => false,
@@ -122,7 +173,6 @@ class HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(
                 Icons.pets,
@@ -131,7 +181,7 @@ class HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Choose Pet',
+                'Categoria',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 32,
@@ -153,6 +203,49 @@ class HomeScreenState extends State<HomeScreen> {
                   prefixIcon: const Icon(Icons.search, color: Colors.white),
                 ),
               ),
+              const SizedBox(height: 20),
+
+              // Título de "Categories"
+              const Row(
+                children: [
+                  Text(
+                    "Categories",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const CategoriasContainer(), // Exibe as categorias
+
+              // Título de "Popular pets"
+              Container(
+                margin: const EdgeInsets.only(top: 20, bottom: 5, left: 20),
+                child: const Row(
+                  children: [
+                    Text(
+                      "Popular pets",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+
+              // GridView com os pets
+              Expanded( // Adicionado Expanded para o GridView ocupar o espaço restante
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: pets.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.9,
+                  ),
+                  itemBuilder: (context, index) {
+                    List<dynamic> images = pets[index]['images'];
+                    return CardPet(name: pets[index]['name'], images: images);
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -160,4 +253,3 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
