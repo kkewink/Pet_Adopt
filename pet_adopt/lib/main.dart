@@ -5,7 +5,7 @@ import 'package:pet_adopt/view/singUp_screen.dart';
 import 'package:pet_adopt/view/login_screen.dart';
 import 'package:pet_adopt/view/pet_sing.dart';
 import 'package:pet_adopt/view/dog_screen.dart';
-import 'package:pet_adopt/view/favorite.dart';
+import 'package:pet_adopt/view/favorite_screen.dart';
 import 'package:pet_adopt/view/onboarding_screen.dart';
 
 void main() {
