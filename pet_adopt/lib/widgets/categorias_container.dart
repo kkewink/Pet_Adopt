@@ -8,14 +8,17 @@ class CategoriasContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: const [
-          Categoria(nome: "Dogs",),
-          Categoria(nome: "Cats",),
-        ],
+    return Center(  // Centraliza o conteúdo na tela
+      child: SizedBox(
+        height: 40,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,  // Garante que o ListView não ocupe mais espaço do que o necessário
+          children: const [
+            Categoria(nome: "Dogs"),
+            Categoria(nome: "Cats"),
+          ],
+        ),
       ),
     );
   }

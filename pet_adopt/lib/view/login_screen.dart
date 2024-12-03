@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:pet_adopt/constants/images_assets.dart';
 import 'package:pet_adopt/view/singUp_screen.dart';
 import 'package:pet_adopt/main.dart';
@@ -118,6 +117,7 @@ class _LoginInState extends State<LoginIn> {
                             ),
                             child: TextField(
                               controller: emailController,
+                              style: const TextStyle(color: Colors.white), // Texto branco
                               decoration: const InputDecoration(
                                 icon: Padding(
                                   padding: EdgeInsets.only(left: 15),
@@ -157,6 +157,7 @@ class _LoginInState extends State<LoginIn> {
                           child: TextField(
                             controller: passwordController,
                             obscureText: true,
+                            style: const TextStyle(color: Colors.white), // Texto branco
                             decoration: const InputDecoration(
                               icon: Padding(
                                 padding: EdgeInsets.only(left: 15),
@@ -203,9 +204,9 @@ class _LoginInState extends State<LoginIn> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Image.asset(AppImages.googleIcon, width: 40),
+                        Image.asset(AppImages.googleIcon, width: 40),
                         const SizedBox(width: 20),
-                        // Image.asset(AppImages.facebookIcon, width: 40),
+                        Image.asset(AppImages.facebookIcon, width: 40),
                       ],
                     ),
                     const SizedBox(height: 20),

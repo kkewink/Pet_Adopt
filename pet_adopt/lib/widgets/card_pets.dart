@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:pet_adopt/constants/images_assets.dart';
 import 'package:pet_adopt/view/pet_details.dart';
 import 'package:flutter/material.dart';

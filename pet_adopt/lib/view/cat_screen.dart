@@ -36,8 +36,10 @@ class CatsScreen extends StatelessWidget {
     ];
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("Cats"),
+        backgroundColor: Colors.black,
+        title: const Text("Cats",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),),
       ),
       body: SingleChildScrollView(
         child: Column(

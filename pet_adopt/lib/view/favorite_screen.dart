@@ -34,7 +34,9 @@ class FavoriteScreen extends StatelessWidget {
     ];
 
     return  Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

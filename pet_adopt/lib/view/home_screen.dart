@@ -1,11 +1,11 @@
-import 'dart:convert';
-import 'package:localstorage/localstorage.dart';
-import 'package:pet_adopt/constants/images_assets.dart';
+import 'package:flutter/material.dart';
+import 'package:pet_adopt/view/edit_profile.dart';
+import 'package:pet_adopt/view/favorite_screen.dart';
+import 'package:pet_adopt/view/pet_sing.dart';
+import 'package:pet_adopt/view/profile_screen.dart';
+import 'package:pet_adopt/view/login_screen.dart';
 import 'package:pet_adopt/widgets/categorias_container.dart';
 import 'package:pet_adopt/widgets/card_pets.dart';
-import 'package:pet_adopt/view/login_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,59 +17,18 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> pets = [];
   String nameUser = "";
+  
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Adicionando chave global
 
   @override
   void initState() {
     super.initState();
-    getUser();
-    getPets();
-  }
-
-  // Função para obter pets
-  void getPets() async {
-    var client = http.Client();
-    var url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
-
-    try {
-      var response = await client.get(Uri.parse(url));
-      var responseData = jsonDecode(response.body);
-
-      for (var element in responseData['pets']) {
-        setState(() {
-          pets.add(element);
-        });
-      }
-    } finally {
-      client.close();
-    }
-  }
-
-  // Função para obter dados do usuário
-  void getUser() async {
-    await initLocalStorage();
-
-    var client = http.Client();
-    var idUser = localStorage.getItem("_idUser");
-    var token = localStorage.getItem("token");
-
-    if (idUser == null || token == null) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginIn()));
-      return; // Evita continuar se não houver idUser ou token
-    }
-
-    var url =
-        "https://pet-adopt-dq32j.ondigitalocean.app/user/${idUser.toString()}";
-    var response = await client.get(Uri.parse(url));
-    var responseData = jsonDecode(response.body);
-    
-    setState(() {
-      nameUser = responseData['user']['name'];
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Atribuindo a chave ao Scaffold
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -77,8 +36,7 @@ class HomeScreenState extends State<HomeScreen> {
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {
-            // Se o Drawer for necessário, esse código pode ser habilitado
-            // _scaffoldKey.currentState?.openDrawer();
+            _scaffoldKey.currentState?.openDrawer(); // Abre o Drawer
           },
         ),
       ),
@@ -86,7 +44,8 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             DrawerHeader(
-              decoration: const BoxDecoration(color: Color.fromARGB(255, 53, 53, 53)),
+              decoration:
+                  const BoxDecoration(color: Color.fromARGB(255, 53, 53, 53)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -107,28 +66,43 @@ class HomeScreenState extends State<HomeScreen> {
               leading: const Icon(Icons.home, color: Colors.black),
               title: const Text('Account information'),
               onTap: () {
-                // Ação do menu "Account information"
+                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()),
+                ); // Navega para a página de informações da conta
               },
             ),
             ListTile(
               leading: const Icon(Icons.pets, color: Colors.black),
-              title: const Text('My pets'),
+              title: const Text('Add pets'),
               onTap: () {
-                // Ação do menu "My pets"
+                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const AddPet()),
+                ); // Nav
               },
             ),
             ListTile(
               leading: const Icon(Icons.favorite, color: Colors.black),
               title: const Text('Favorites'),
               onTap: () {
-                // Ação do menu "Favorites"
+                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const FavoriteScreen()),
+                ); // Navega para a página de favoritos
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings, color: Colors.black),
               title: const Text('Settings'),
               onTap: () {
-                // Ação do menu "Settings"
+                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const EditProfile()),
+                ); // Navega para a página de configurações
               },
             ),
             const Divider(),
@@ -152,7 +126,8 @@ class HomeScreenState extends State<HomeScreen> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => const LoginIn()),
+                            MaterialPageRoute(
+                                builder: (context) => const LoginIn()),
                             (route) => false,
                           );
                         },
@@ -204,33 +179,10 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Título de "Categories"
-              const Row(
-                children: [
-                  Text(
-                    "Categories",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
               const CategoriasContainer(), // Exibe as categorias
 
-              // Título de "Popular pets"
-              Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 5, left: 20),
-                child: const Row(
-                  children: [
-                    Text(
-                      "Popular pets",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-
               // GridView com os pets
-              Expanded( // Adicionado Expanded para o GridView ocupar o espaço restante
+              Expanded(
                 child: GridView.builder(
                   shrinkWrap: true,
                   primary: false,

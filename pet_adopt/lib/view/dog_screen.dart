@@ -36,8 +36,10 @@ class DogsScreen extends StatelessWidget {
     ];
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("Dogs"),
+        backgroundColor: Colors.black,
+        title: const Text("Dogs",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),),
       ),
       body: SingleChildScrollView(
         child: Column(
