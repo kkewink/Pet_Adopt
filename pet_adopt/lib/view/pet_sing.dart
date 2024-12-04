@@ -44,7 +44,12 @@ class AddPet extends StatefulWidget {
       };
 
       try {
-        var response = await client.post(Uri.parse(url), body: json.encode(data), headers: {'Content-Type' : 'application/json', 'Authorization' : token.toString()});
+        print(json.encode(data));
+        var response = await client.post(Uri.parse(url),
+         body: json.encode(data),
+          headers: {
+            'Content-Type' : 'application/json', 'Authorization' : 'Bearer ${token}'});
+        
         print(response.body);
 
         setState(() {
@@ -57,7 +62,6 @@ class AddPet extends StatefulWidget {
       }
     }
 
-  
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       body: SingleChildScrollView(

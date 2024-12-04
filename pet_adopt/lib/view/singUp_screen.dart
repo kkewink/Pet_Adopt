@@ -1,12 +1,21 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:localstorage/localstorage.dart';
 import 'package:pet_adopt/constants/images_assets.dart';
+import 'package:pet_adopt/view/home_screen.dart';
 import 'package:pet_adopt/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class SingUp extends StatelessWidget {
+class SingUp extends StatefulWidget {
   const SingUp({super.key});
+
+  @override
+  State<SingUp> createState() => _SingUpState();
+}
+
+class _SingUpState extends State<SingUp> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +26,10 @@ class SingUp extends StatelessWidget {
     TextEditingController confirmPassController = TextEditingController();
 
     void cadastro() async {
+      await initLocalStorage();
+      print(localStorage.getItem("token"));
+
+
       var data = {
         "name": nameController.text,
         "phone": phoneController.text,
@@ -26,18 +39,33 @@ class SingUp extends StatelessWidget {
       };
 
       var client = http.Client();
-      var url = "";
 
-      try {
+      var url = "http://pet-adopt-dq32j.ondigitalocean.app/user/register";
+
+      try{
         var response = await client.post(Uri.parse(url),
-            headers: {'Content-Type': 'application/json'},
-            body: json.encode(data));
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(data));
 
         var responseData = jsonDecode(response.body);
+
+        if (responseData['token'] != null) {
+          localStorage.setItem("token", responseData['token']);
+          localStorage.setItem("_idUser",responseData['userId']);
+
+          Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+        }
+
+        setState(() {
+          msgErro: responseData['message'];
+        });
+
+
         print(responseData);
-      } finally {
+      } finally{
         client.close();
-      }
+      }   
     }
 
  

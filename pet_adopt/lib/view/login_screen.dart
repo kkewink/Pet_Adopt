@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:localstorage/localstorage.dart';
 import 'package:pet_adopt/constants/images_assets.dart';
+import 'package:pet_adopt/view/home_screen.dart';
 import 'package:pet_adopt/view/singUp_screen.dart';
 import 'package:pet_adopt/main.dart';
 
@@ -17,56 +19,53 @@ class _LoginInState extends State<LoginIn> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void login() {
-    setState(() {
-      if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-        msgErro = "Preencha todos os campos!";
-      } else {
-        msgErro = "";
-        print(
-            "Email: ${emailController.text}, Password: ${passwordController.text}");
-      }
-    });
-  }
-
-  void fazerLogin() async {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      setState(() {
-        msgErro = "Valide seus dados";
-      });
-      return;
-    }
-
-    var client = http.Client();
-    var url = 'https://example.com/login'; // Substitua pela URL correta.
-    var data = {
-      "email": emailController.text,
-      "password": passwordController.text
-    };
-
-    try {
-      var response = await client.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(data),
-      );
-
-      var responseData = jsonDecode(response.body);
-      print(responseData['success']);
-
-      if (responseData['success'] != true) {
-        print(responseData['message']);
-        setState(() {
-          msgErro = responseData['message'];
-        });
-      }
-    } finally {
-      client.close();
-    }
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext content){
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
+    void fazerLogin() async{
+      await initLocalStorage();
+
+      if(emailController.text.isEmpty || passwordController.text.isEmpty) {
+        return setState(() => {msgErro = "Valide seus dados"});
+      }
+      var client = http.Client();
+      var url = 'http://pet-adopt-dq32j.ondigitalocean.app/user/login';
+      var data = {
+        "email": emailController.text,
+        "password": passwordController
+      };
+      try{
+        var response = await client.post(Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body:json.encode(data));
+
+        var responseData = jsonDecode(response.body);
+
+        if(responseData['token'] !=null){
+          var token = responseData['token'];
+          var idUser = responseData['userId'];
+
+          localStorage.setItem("token", token);
+          localStorage.setItem("_idUser", idUser);
+          Navigator.of(content).push(MaterialPageRoute(builder: (content) => HomeScreen()));
+        }
+
+        if(responseData['sucess'] = false) {
+          setState(() {
+            msgErro = responseData['message'];
+          });
+        }
+
+        print(responseData);
+      } finally{
+        client.close();
+      }
+    }
+  
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -175,11 +174,14 @@ class _LoginInState extends State<LoginIn> {
                         ),
                       ],
                     ),
+                    Text(msgErro),
                     Container(
                       width: double.infinity, // Largura total do pai (Container)
                       margin: const EdgeInsets.only(top: 20),
                       child: ElevatedButton(
-                        onPressed: login,
+                        onPressed: () {
+                          fazerLogin();
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple,
                           shape: const RoundedRectangleBorder(
