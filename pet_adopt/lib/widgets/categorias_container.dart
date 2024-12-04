@@ -1,4 +1,5 @@
 import 'package:pet_adopt/widgets/categoria.dart';
+import 'package:pet_adopt/widgets/caterogiaG.dart';
 import 'package:flutter/material.dart';
 
 class CategoriasContainer extends StatelessWidget {
@@ -16,7 +17,7 @@ class CategoriasContainer extends StatelessWidget {
           shrinkWrap: true,  // Garante que o ListView não ocupe mais espaço do que o necessário
           children: const [
             Categoria(nome: "Dogs"),
-            Categoria(nome: "Cats"),
+            CategoriaG(nome: "Cats"),
           ],
         ),
       ),

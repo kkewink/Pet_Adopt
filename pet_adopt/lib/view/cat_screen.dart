@@ -21,18 +21,6 @@ class CatsScreen extends StatelessWidget {
         "imagem" : "",
         "idade" : "1",
       },
-      {
-        "imagem" : "",
-        "idade" : "1",
-      },
-      {
-        "imagem" : "",
-        "idade" : "1",
-      },
-      {
-        "imagem" : "",
-        "idade" : "1",
-      },
     ];
 
     return Scaffold(
