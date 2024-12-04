@@ -121,14 +121,13 @@ class AddPet extends StatefulWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 20),
-              Text(
-                msgError,
-                style: const TextStyle(color: Colors.red),
-              ),
+              Text(msgError,style: const TextStyle(color: Colors.red),),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: addPet,
+                  onPressed: ()  {
+                    addPet();
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     shape: RoundedRectangleBorder(

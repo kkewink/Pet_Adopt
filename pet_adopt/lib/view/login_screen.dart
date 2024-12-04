@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
+
 import 'package:pet_adopt/constants/images_assets.dart';
 import 'package:pet_adopt/view/home_screen.dart';
 import 'package:pet_adopt/view/singUp_screen.dart';
@@ -25,42 +26,42 @@ class _LoginInState extends State<LoginIn> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    void fazerLogin() async{
+      void fazerLogin() async {
       await initLocalStorage();
-
-      if(emailController.text.isEmpty || passwordController.text.isEmpty) {
+      if (emailController.text.isEmpty || passwordController.text.isEmpty) {
         return setState(() => {msgErro = "Valide seus dados"});
       }
+
       var client = http.Client();
-      var url = 'http://pet-adopt-dq32j.ondigitalocean.app/user/login';
+      var url = 'https://pet-adopt-dq32j.ondigitalocean.app/user/login';
       var data = {
         "email": emailController.text,
-        "password": passwordController
+        "password": passwordController.text
       };
-      try{
+      try {
         var response = await client.post(Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body:json.encode(data));
-
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(data));
         var responseData = jsonDecode(response.body);
 
-        if(responseData['token'] !=null){
+        if (responseData['token'] != null) {
           var token = responseData['token'];
           var idUser = responseData['userId'];
 
           localStorage.setItem("token", token);
           localStorage.setItem("_idUser", idUser);
-          Navigator.of(content).push(MaterialPageRoute(builder: (content) => HomeScreen()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
         }
 
-        if(responseData['sucess'] = false) {
+        if (responseData['success'] == false) {
           setState(() {
             msgErro = responseData['message'];
           });
         }
 
         print(responseData);
-      } finally{
+      } finally {
         client.close();
       }
     }

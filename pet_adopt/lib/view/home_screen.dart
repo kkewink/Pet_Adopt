@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
-
+// Importando as telas corretamente
 import 'package:pet_adopt/view/edit_profile.dart';
 import 'package:pet_adopt/view/favorite_screen.dart';
 import 'package:pet_adopt/view/pet_sing.dart';
-import 'package:pet_adopt/view/login_screen.dart';
+import 'package:pet_adopt/view/login_screen.dart'; // Corrigido para LoginScreen
 import 'package:pet_adopt/view/pets_screen.dart';
 import 'package:pet_adopt/widgets/categoria.dart';
 import 'package:pet_adopt/widgets/categorias_container.dart';
@@ -23,62 +23,68 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> pets = [];
   String nameUser = "";
-  
 
-@override
-void getPets() async {
-  var client = http.Client();
+  @override
+  void getPets() async {
+    var client = http.Client();
+    var url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
 
-  var url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
+    try {
+      var response = await client.get(Uri.parse(url));
 
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        print("elment");
 
-  try{
-    var response = await client.get(Uri.parse(url),
-    );
-
-    var responseData = jsonDecode(response.body);
-
-
-    print("elment");
-
-    for (var element in responseData['pets']) {
-      setState(() {
-        pets.add(element);
-      });
+        for (var element in responseData['pets']) {
+          setState(() {
+            pets.add(element);
+          });
+        }
+      } else {
+        print("Erro ao carregar pets: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Erro de rede: $e");
+    } finally {
+      client.close();
     }
-  }finally{
-    client.close();
   }
-}
 
-  void getUser() async{
-    await initLocalStorage();
+  void getUser() async {
+    await initLocalStorage(); // Inicia o LocalStorage
 
     var client = http.Client();
-
     var idUser = localStorage.getItem("_idUser");
     var token = localStorage.getItem("token");
 
-    if(idUser == null || token == null){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginIn()));
+    if (idUser == null || token == null) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginIn()));
+      return; // Impede execução do código abaixo caso o usuário não esteja logado
     }
 
     var url = "https://pet-adopt-dq32j.ondigitalocean.app/user/${idUser.toString()}";
     var response = await client.get(Uri.parse(url));
-    var responseData = jsonDecode(response.body);
 
-    setState(() {
-      nameUser = responseData['user']['name'];
-    });
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+
+    print(responseData);
+      setState(() {
+        nameUser = responseData['']['name'];
+      });
+    } else {
+      print("Erro ao carregar dados do usuário: ${response.statusCode}");
+    }
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Adicionando chave global
 
   @override
   void initState() {
+    super.initState();
     getUser();
     getPets();
-    super.initState();
   }
 
   @override
