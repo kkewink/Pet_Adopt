@@ -15,14 +15,14 @@ class PetsDetails extends StatelessWidget {
         actions: [
           ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.white),
+              backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
               elevation: WidgetStateProperty.all(0),
             ),
             onPressed: () {},
             child: const Icon(
               Icons.favorite_border,
               size: 35,
-              color: Colors.black, // Ícone de coração branco para visibilidade
+              color: Color.fromARGB(255, 102, 0, 150), // Ícone de coração branco para visibilidade
             ),
           ),
         ],
@@ -89,9 +89,6 @@ class PetsDetails extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CharacteristicPet(),
-                  CharacteristicPet(),
-                  CharacteristicPet(),
                   CharacteristicPet(),
                 ],
               ),
