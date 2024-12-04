@@ -2,9 +2,9 @@ import 'package:pet_adopt/widgets/card_pets.dart';
 import 'package:pet_adopt/widgets/categorias_container.dart';
 import 'package:flutter/material.dart';
 
-class DogsScreen extends StatelessWidget {
+class MyPets extends StatelessWidget {
   
-  const DogsScreen({super.key});
+  const MyPets({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,8 @@ class DogsScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   childAspectRatio: 0.9,
                 ),
-                itemBuilder: (context, index) {},
+                itemBuilder: (context, index) {
+                },
               ),
           ],
         ),

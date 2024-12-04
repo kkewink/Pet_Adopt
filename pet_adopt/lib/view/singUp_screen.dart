@@ -40,14 +40,17 @@ class _SingUpState extends State<SingUp> {
 
       var client = http.Client();
 
-      var url = "http://pet-adopt-dq32j.ondigitalocean.app/user/register";
+      var url = "https://pet-adopt-dq32j.ondigitalocean.app/user/register";
 
       try{
         var response = await client.post(Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(data));
 
+        print(response.body);
+
         var responseData = jsonDecode(response.body);
+
 
         if (responseData['token'] != null) {
           localStorage.setItem("token", responseData['token']);

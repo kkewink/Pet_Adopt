@@ -16,7 +16,7 @@ class CharacteristicPet extends StatelessWidget {
       child: const Column(
         children: [
           Text("Labrador", style: TextStyle(color: Colors.white)),
-          Text("Cor Chocolate", style: TextStyle(color: Colors.white))
+          Text("Cor Chocolate", style: TextStyle(color: Colors.white)),
         ],
       ),
     );

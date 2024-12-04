@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:localstorage/localstorage.dart';
+
+
 import 'package:pet_adopt/view/edit_profile.dart';
 import 'package:pet_adopt/view/favorite_screen.dart';
 import 'package:pet_adopt/view/pet_sing.dart';
-import 'package:pet_adopt/view/profile_screen.dart';
 import 'package:pet_adopt/view/login_screen.dart';
+import 'package:pet_adopt/view/pets_screen.dart';
+import 'package:pet_adopt/widgets/categoria.dart';
 import 'package:pet_adopt/widgets/categorias_container.dart';
 import 'package:pet_adopt/widgets/card_pets.dart';
 
@@ -18,15 +24,66 @@ class HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> pets = [];
   String nameUser = "";
   
+
+@override
+void getPets() async {
+  var client = http.Client();
+
+  var url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
+
+
+  try{
+    var response = await client.get(Uri.parse(url),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+
+    print("elment");
+
+    for (var element in responseData['pets']) {
+      setState(() {
+        pets.add(element);
+      });
+    }
+  }finally{
+    client.close();
+  }
+}
+
+  void getUser() async{
+    await initLocalStorage();
+
+    var client = http.Client();
+
+    var idUser = localStorage.getItem("_idUser");
+    var token = localStorage.getItem("token");
+
+    if(idUser == null || token == null){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginIn()));
+    }
+
+    var url = "https://pet-adopt-dq32j.ondigitalocean.app/user/${idUser.toString()}";
+    var response = await client.get(Uri.parse(url));
+    var responseData = jsonDecode(response.body);
+
+    setState(() {
+      nameUser = responseData['user']['name'];
+    });
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Adicionando chave global
 
   @override
   void initState() {
+    getUser();
+    getPets();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(pets.length);
     return Scaffold(
       key: _scaffoldKey, // Atribuindo a chave ao Scaffold
       backgroundColor: Colors.black,
@@ -64,12 +121,12 @@ class HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.home, color: Colors.black),
-              title: const Text('Account information'),
+              title: const Text('account pets'),
               onTap: () {
                 Navigator.of(context).pop(); // Fecha o drawer
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (context) => const ProfileScreen()),
+                      builder: (context) => const MyPets()),
                 ); // Navega para a página de informações da conta
               },
             ),
@@ -194,6 +251,7 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   itemBuilder: (context, index) {
                     List<dynamic> images = pets[index]['images'];
+
                     return CardPet(name: pets[index]['name'], images: images);
                   },
                 ),

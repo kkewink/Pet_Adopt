@@ -15,7 +15,7 @@ class OnboardingScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Image.asset(AppImages.onboarding),
+            Image.asset(AppImages.cat1),
             Container(
                 margin: const EdgeInsets.only(top: 30),
                 child: Column(
