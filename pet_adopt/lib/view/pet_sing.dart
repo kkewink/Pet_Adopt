@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:pet_adopt/view/home_screen.dart';
 import 'package:pet_adopt/view/login_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
@@ -11,7 +12,7 @@ class AddPet extends StatefulWidget {
   State<AddPet> createState() => _AddPetState();
 }
 
-  class _AddPetState extends State<AddPet> {
+class _AddPetState extends State<AddPet> {
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,7 @@ class AddPet extends StatefulWidget {
         var response = await client.post(Uri.parse(url),
          body: json.encode(data),
           headers: {
-            'Content-Type' : 'application/json', 'Authorization' : 'Bearer ${token}'});
-        
+            'Content-Type' : 'application/json', 'Authorization' : 'Bearer ${token}'});  
         print(response.body);
 
         setState(() {
@@ -92,7 +92,7 @@ class AddPet extends StatefulWidget {
               ),
               const SizedBox(height: 20),
               _buildTextField(
-                controller:ageController,
+                controller: ageController,
                 label: "",
                 hintText: "Age",
                 icon: Icons.calendar_month,
@@ -101,7 +101,7 @@ class AddPet extends StatefulWidget {
               _buildTextField(
                 controller: weightController,
                 label: "",
-                hintText: "Weigth",
+                hintText: "Weight",
                 icon: Icons.pets,
               ),
               const SizedBox(height: 20),
@@ -121,12 +121,15 @@ class AddPet extends StatefulWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 20),
-              Text(msgError,style: const TextStyle(color: Colors.red),),
+              Text(msgError, style: const TextStyle(color: Colors.red)),
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
                   onPressed: ()  {
                     addPet();
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => HomeScreen(),
+                    ));
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
@@ -147,7 +150,6 @@ class AddPet extends StatefulWidget {
               ),
             ],
           ),
-          
         ),
       ),
     );
@@ -197,5 +199,3 @@ class AddPet extends StatefulWidget {
     );
   }
 }
-            
-              

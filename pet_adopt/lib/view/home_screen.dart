@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
-// Importando as telas corretamente
 import 'package:pet_adopt/view/edit_profile.dart';
 import 'package:pet_adopt/view/favorite_screen.dart';
 import 'package:pet_adopt/view/pet_sing.dart';
-import 'package:pet_adopt/view/login_screen.dart'; // Corrigido para LoginScreen
+import 'package:pet_adopt/view/login_screen.dart';
 import 'package:pet_adopt/view/pets_screen.dart';
 import 'package:pet_adopt/widgets/categoria.dart';
 import 'package:pet_adopt/widgets/categorias_container.dart';
@@ -27,71 +26,69 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void getPets() async {
     var client = http.Client();
+
     var url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
 
     try {
-      var response = await client.get(Uri.parse(url));
+      var response = await client.get(
+        Uri.parse(url),
+      );
 
-      if (response.statusCode == 200) {
-        var responseData = jsonDecode(response.body);
-        print("elment");
+      var responseData = jsonDecode(response.body);
 
-        for (var element in responseData['pets']) {
-          setState(() {
-            pets.add(element);
-          });
-        }
-      } else {
-        print("Erro ao carregar pets: ${response.statusCode}");
+      // print(responseData['pets']);
+      print("element");
+
+      for (var element in responseData['pets']) {
+        setState(() {
+          pets.add(element);
+        });
       }
-    } catch (e) {
-      print("Erro de rede: $e");
     } finally {
       client.close();
     }
   }
 
   void getUser() async {
-    await initLocalStorage(); // Inicia o LocalStorage
+    await initLocalStorage();
 
     var client = http.Client();
+
     var idUser = localStorage.getItem("_idUser");
     var token = localStorage.getItem("token");
 
     if (idUser == null || token == null) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginIn()));
-      return; // Impede execução do código abaixo caso o usuário não esteja logado
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const LoginIn()));
     }
 
-    var url = "https://pet-adopt-dq32j.ondigitalocean.app/user/${idUser.toString()}";
-    var response = await client.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      var responseData = jsonDecode(response.body);
-
+    var url =
+        "https://pet-adopt-dq32j.ondigitalocean.app/user/${idUser.toString()}";
+    var response = await client
+        .get(Uri.parse(url), headers: {'Authorization': 'bearer ${token}'});
+    var responseData = jsonDecode(response.body);
+    // print(localStorage.getItem("token"));
     print(responseData);
-      setState(() {
-        nameUser = responseData['']['name'];
-      });
-    } else {
-      print("Erro ao carregar dados do usuário: ${response.statusCode}");
-    }
+    setState(() {
+      nameUser = responseData['user']['name'];
+    });
   }
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Adicionando chave global
 
   @override
   void initState() {
-    super.initState();
     getUser();
     getPets();
+    super.initState();
   }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>(); // Adicionando chave global
 
   @override
   Widget build(BuildContext context) {
     print(pets.length);
     return Scaffold(
-      key: _scaffoldKey, // Atribuindo a chave ao Scaffold
+      key: _scaffoldKey,
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -99,7 +96,7 @@ class HomeScreenState extends State<HomeScreen> {
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer(); // Abre o Drawer
+            _scaffoldKey.currentState?.openDrawer();
           },
         ),
       ),
@@ -119,7 +116,7 @@ class HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     icon: const Icon(Icons.close, color: Colors.white),
                     onPressed: () {
-                      Navigator.of(context).pop(); // Fecha o menu lateral
+                      Navigator.of(context).pop();
                     },
                   ),
                 ],
@@ -129,21 +126,19 @@ class HomeScreenState extends State<HomeScreen> {
               leading: const Icon(Icons.home, color: Colors.black),
               title: const Text('account pets'),
               onTap: () {
-                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => const MyPets()),
-                ); // Navega para a página de informações da conta
+                  MaterialPageRoute(builder: (context) => const MyPets()),
+                );
               },
             ),
             ListTile(
               leading: const Icon(Icons.pets, color: Colors.black),
               title: const Text('Add pets'),
               onTap: () {
-                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => const AddPet()),
+                  MaterialPageRoute(builder: (context) => const AddPet()),
                 ); // Nav
               },
             ),
@@ -151,21 +146,21 @@ class HomeScreenState extends State<HomeScreen> {
               leading: const Icon(Icons.favorite, color: Colors.black),
               title: const Text('Favorites'),
               onTap: () {
-                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                       builder: (context) => const FavoriteScreen()),
-                ); // Navega para a página de favoritos
+                );
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings, color: Colors.black),
               title: const Text('Settings'),
               onTap: () {
-                Navigator.of(context).pop(); // Fecha o drawer
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const EditProfile()),
-                ); // Navega para a página de configurações
+                );
               },
             ),
             const Divider(),
@@ -258,7 +253,13 @@ class HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     List<dynamic> images = pets[index]['images'];
 
-                    return CardPet(name: pets[index]['name'], images: images);
+                    return CardPet(
+                      name: pets[index]['name'],
+                      images: images,
+                      age: pets[index]['age'],
+                      weight:  pets[index]['weight'].toDouble(),
+                      color: pets[index]['color'],
+                  );
                   },
                 ),
               ),

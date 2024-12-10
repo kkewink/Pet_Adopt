@@ -3,7 +3,21 @@ import 'package:pet_adopt/widgets/characters_pet.dart';
 import 'package:flutter/material.dart';
 
 class PetsDetails extends StatelessWidget {
-  const PetsDetails({super.key});
+    final String name;
+    final int age;
+    final double weight;
+    final String color;
+    final String image;
+
+  const PetsDetails({
+    super.key,
+    required this.name,
+    required this.age,
+    required this.weight,
+    required this.color,
+    required this.image,
+    });
+  
 
   @override
   Widget build(BuildContext context) {
@@ -30,34 +44,26 @@ class PetsDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Imagem do pet
-            Image.asset(
-              AppImages.dog1,
+            Image.network(
+              image.toString(),
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.contain,
             ),
-            
             // Nome e ícone do pet
             Container(
-              margin: const EdgeInsets.only(left: 20, top: 20),
+              margin: const EdgeInsets.only(left: 20),
               child: Row(
                 children: [
-                  const Text(
-                    "Duke",
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white, // Texto branco para contraste
-                    ),
-                  ),
+                  Text(name.toString(),
+                      style:
+                          const TextStyle(fontSize: 32, fontWeight: FontWeight.bold,color: Colors.white)),
                   Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    child: const Icon(
-                      Icons.male,
-                      color: Colors.blue,
-                      size: 32,
-                    ),
-                  ),
+                      margin: const EdgeInsets.only(left: 10),
+                      child: const Icon(
+                        Icons.male,
+                        color: Colors.blue,
+                        size: 32,
+                      ))
                 ],
               ),
             ),
@@ -84,12 +90,23 @@ class PetsDetails extends StatelessWidget {
             ),
 
             // Características do pet
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CharacteristicPet(),
+                  CharacteristicPet(
+                    title: 'Cor',
+                    subTitle: color,
+                  ),
+                  CharacteristicPet(
+                    title: 'Peso',
+                    subTitle: weight.toString(),
+                  ),
+                  CharacteristicPet(
+                    title: 'Idade',
+                    subTitle: age.toString(),
+                  ),
                 ],
               ),
             ),
