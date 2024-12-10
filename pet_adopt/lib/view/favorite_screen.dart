@@ -56,21 +56,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const cats = [
-      {
-        "imagem": "",
-        "idade": "1",
-      },
-      {
-        "imagem": "",
-        "idade": "1",
-      },
-      {
-        "imagem": "",
-        "idade": "1",
-      },
-    ];
-
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
