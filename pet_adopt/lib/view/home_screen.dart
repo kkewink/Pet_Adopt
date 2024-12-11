@@ -13,8 +13,9 @@ import 'package:pet_adopt/widgets/categorias_container.dart';
 import 'package:pet_adopt/widgets/card_pets.dart';
 
 class HomeScreen extends StatefulWidget {
+  
   const HomeScreen({super.key});
-
+  
   @override
   State<HomeScreen> createState() => HomeScreenState();
 }
@@ -80,9 +81,9 @@ class HomeScreenState extends State<HomeScreen> {
     getPets();
     super.initState();
   }
-
   final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(); // Adicionando chave global
+  
 
   @override
   Widget build(BuildContext context) {
